@@ -22,7 +22,7 @@ var student = {
   name: "",
   grades: [],
 };
-var currentGrades; // [1,2,3,4]
+var currentGrades;
 
 function submitName() {
   var input = document.querySelector("#name-form input");
@@ -52,14 +52,13 @@ function submitGrade() {
   }
   student.grades.push(grade);
 
-  console.log("student", student);
-
   showNextGradeForm();
 }
 
 function showNextGradeForm() {
   var assignment = assignments.shift();
   if (!assignment) {
+    hideGradeForm();
     saveStudent();
     return;
   }
@@ -106,9 +105,9 @@ function saveStudent() {
   var students = localStorage.getItem("students");
   if (students === null) {
     students = [];
+  } else {
+    students = JSON.parse(students);
   }
-  // TODO: What it is not null?
-
 
   students.push(student)
 
@@ -116,7 +115,7 @@ function saveStudent() {
 
   localStorage.setItem("students", json);
 
-  // TODO: Redirect to gradebook when we are finished
+  window.location = "gradebook.html";
 }
 
 var remaining = 10;
@@ -143,17 +142,6 @@ function stopTimer() {
   var span = document.querySelector("#grade-form span");
   span.textContent = remaining + " seconds until auto-submit";
 }
-
-
-
-// WHEN I enter a grade
-// THEN I have 10 seconds to complete it or it moves on to the next grade
-
-// WHEN I enter all of the grades
-// THEN the student's grades are recorded to local storage
-
-
-
 
 document.querySelector("#name-form button").addEventListener("click", submitName);
 document.querySelector("#grade-form button").addEventListener("click", submitGrade);
