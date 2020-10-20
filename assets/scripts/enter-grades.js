@@ -35,3 +35,18 @@ function showGradeForm() {
   document.getElementById("grade-form").classList.remove("d-none");
 }
 
+hideGradeForm();
+
+var studentName;
+
+document.querySelector("#name-form button").addEventListener("click", function () {
+  var input = document.querySelector("#name-form input");
+  if (!input.value) {
+    alert("Student name is required!");
+    return;
+  }
+
+  studentName = input.value;
+  hideNameForm();
+  showGradeForm();
+});
