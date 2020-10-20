@@ -13,6 +13,7 @@ function hideGradeForm() {
 function showGradeForm(grade) {
   document.getElementById("grade-form").classList.remove("d-none");
   document.querySelector("#grade-form input[readonly]").value = grade.name;
+  startTimer();
 }
 
 hideGradeForm();
@@ -42,6 +43,8 @@ function submitName() {
 }
 
 function submitGrade() {
+  stopTimer();
+
   var input = document.getElementById("txtGrade");
   var grade = Number.parseInt(input.value, 10);
   if (Number.isNaN(grade) || grade < 0 || grade > 100) {
@@ -116,7 +119,30 @@ function saveStudent() {
   // TODO: Redirect to gradebook when we are finished
 }
 
+var remaining = 10;
+var interval;
 
+function startTimer() {
+  remaining = 10;
+  interval = setInterval(function tick() {
+    var span = document.querySelector("#grade-form span");
+    span.textContent = remaining + " seconds until auto-submit";
+
+    remaining--;
+
+    if (remaining <= 0) {
+      submitGrade();
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(interval);
+  remaining = 10;
+
+  var span = document.querySelector("#grade-form span");
+  span.textContent = remaining + " seconds until auto-submit";
+}
 
 
 
