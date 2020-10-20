@@ -21,6 +21,7 @@ var student = {
   name: "",
   grades: [],
 };
+var currentGrades; // [1,2,3,4]
 
 function submitName() {
   var input = document.querySelector("#name-form input");
@@ -30,6 +31,12 @@ function submitName() {
   }
 
   student.name = input.value;
+
+  var current = readStudent(student.name);
+  if (current) {
+    currentGrades = current.grades;
+  }
+
   hideNameForm();
   showNextGradeForm();
 }
@@ -41,29 +48,27 @@ function submitGrade() {
     grade = 0;
   }
   student.grades.push(grade);
+
   console.log("student", student);
+
+  showNextGradeForm();
 }
 
-
-
-
-// WHEN I enter the student's name
-// THEN I am presented with a list of assignments that need to be graded
 function showNextGradeForm() {
   var assignment = assignments.shift();
   if (!assignment) {
-    alert("TODO: Out of assignments");
+    saveStudent();
     return;
   }
 
-  // WHEN the student's grades are in local storage
-  // THEN the grade input fields are pre-populated
+  if (currentGrades) {
+    document.getElementById("txtGrade").value = currentGrades.shift();
+  } else {
+    document.getElementById("txtGrade").value = "";
+  }
 
   showGradeForm(assignment);
-
-
 }
-
 
 function validateGrade() {
   var value = Number.parseInt(this.value, 10);
@@ -76,6 +81,40 @@ function validateGrade() {
   }
 }
 
+function readStudent(name) {
+  var json = localStorage.getItem("students");
+  if (json === null) {
+    return undefined;
+  }
+
+  var students = JSON.parse(json);
+
+  for (var x = 0; x < students.length; x++) {
+    var current = students[x];
+    if (current.name === name) {
+      return current;
+    }
+  }
+
+  return undefined;
+}
+
+function saveStudent() {
+  var students = localStorage.getItem("students");
+  if (students === null) {
+    students = [];
+  }
+  // TODO: What it is not null?
+
+
+  students.push(student)
+
+  var json = JSON.stringify(students);
+
+  localStorage.setItem("students", json);
+
+  // TODO: Redirect to gradebook when we are finished
+}
 
 
 
