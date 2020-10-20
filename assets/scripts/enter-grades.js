@@ -18,3 +18,20 @@ THEN the value 0 will be used
 WHEN I click the gradebook link
 THEN I am presented with the student's name (sorted), grades, and average
 */
+
+function hideNameForm() {
+  document.getElementById("name-form").classList.add("d-none");
+}
+
+function showNameForm() {
+  document.getElementById("name-form").classList.remove("d-none");
+}
+
+function hideGradeForm() {
+  document.getElementById("grade-form").classList.add("d-none");
+}
+
+function showGradeForm() {
+  document.getElementById("grade-form").classList.remove("d-none");
+}
+
