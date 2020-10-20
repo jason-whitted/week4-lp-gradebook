@@ -1,5 +1,7 @@
 # Week 4: Live Programming: Gradebook
 
+[Demo Site](https://jason-whitted.github.io/week4-lp-gradebook/)
+
 In this live programming session we are going to create a Gradebook utilizing:
 - DOM
 - setInterval
