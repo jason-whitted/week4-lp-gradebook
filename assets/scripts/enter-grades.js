@@ -31,8 +31,9 @@ function hideGradeForm() {
   document.getElementById("grade-form").classList.add("d-none");
 }
 
-function showGradeForm() {
+function showGradeForm(grade) {
   document.getElementById("grade-form").classList.remove("d-none");
+  document.querySelector("#grade-form input[readonly]").value = grade.name;
 }
 
 hideGradeForm();
@@ -48,5 +49,16 @@ document.querySelector("#name-form button").addEventListener("click", function (
 
   studentName = input.value;
   hideNameForm();
-  showGradeForm();
+  showNextGradeForm();
 });
+
+function showNextGradeForm() {
+  var assignment = assignments.shift();
+  if (!assignment) {
+    alert("TODO: Out of assignments");
+    return;
+  }
+
+  showGradeForm(assignment);
+
+}
