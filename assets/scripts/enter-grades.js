@@ -17,19 +17,35 @@ function showGradeForm(grade) {
 
 hideGradeForm();
 
-var studentName;
+var student = {
+  name: "",
+  grades: [],
+};
 
-document.querySelector("#name-form button").addEventListener("click", function () {
+function submitName() {
   var input = document.querySelector("#name-form input");
   if (!input.value) {
     alert("Student name is required!");
     return;
   }
 
-  studentName = input.value;
+  student.name = input.value;
   hideNameForm();
   showNextGradeForm();
-});
+}
+
+function submitGrade() {
+  var input = document.getElementById("txtGrade");
+  var grade = Number.parseInt(input.value, 10);
+  if (Number.isNaN(grade) || grade < 0 || grade > 100) {
+    grade = 0;
+  }
+  student.grades.push(grade);
+  console.log("student", student);
+}
+
+
+
 
 // WHEN I enter the student's name
 // THEN I am presented with a list of assignments that need to be graded
@@ -61,13 +77,9 @@ function validateGrade() {
 }
 
 
-// WHEN an invalid grade is submitted
-// THEN the value 0 will be used
 
 
 
-// WHEN I enter a grade
-// THEN it must be a valid grade (number between 0 to 100)
 
 // WHEN I enter a grade
 // THEN I have 10 seconds to complete it or it moves on to the next grade
@@ -78,4 +90,6 @@ function validateGrade() {
 
 
 
+document.querySelector("#name-form button").addEventListener("click", submitName);
+document.querySelector("#grade-form button").addEventListener("click", submitGrade);
 document.getElementById("txtGrade").addEventListener("keyup", validateGrade);
